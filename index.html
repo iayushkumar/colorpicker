@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #colorPicker {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input[type="color"] {
+            margin: 10px;
+        }
+
+        div {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="colorPicker">
+        <h1>Color Picker</h1>
+        <label for="color">Select a color:</label>
+        <input type="color" id="color" value="#ff0000" onchange="updateColor()">
+        <div>
+            <p><strong>Hex:</strong> <span id="hexCode">#ff0000</span></p>
+            <p><strong>RGB:</strong> <span id="rgbCode">rgb(255, 0, 0)</span></p>
+        </div>
+    </div>
+
+    <script>
+        function updateColor() {
+            const colorInput = document.getElementById('color');
+            const hexCodeElement = document.getElementById('hexCode');
+            const rgbCodeElement = document.getElementById('rgbCode');
+
+            const selectedColor = colorInput.value;
+
+            hexCodeElement.innerText = selectedColor.toUpperCase();
+
+            // Convert hex to RGB
+            const rgbValues = hexToRgb(selectedColor);
+            rgbCodeElement.innerText = `rgb(${rgbValues.r}, ${rgbValues.g}, ${rgbValues.b})`;
+        }
+
+        function hexToRgb(hex) {
+            // Remove the hash at the beginning, if any
+            hex = hex.replace(/^#/, '');
+
+            // Parse the hex values into their respective RGB components
+            const bigint = parseInt(hex, 16);
+            const r = (bigint >> 16) & 255;
+            const g = (bigint >> 8) & 255;
+            const b = bigint & 255;
+
+            return { r, g, b };
+        }
+    </script>
+</body>
+
+</html>
